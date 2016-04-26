@@ -134,7 +134,7 @@ double mMast(){
 double DAxle(){
     double a = (ld*rhoBody+rhoAxle)*9.81/2;             // LOOK AT THIS AGAIN (PEDRAM) -- Checked
     double b = (mEnd+.5*(mc+mMast()+mFront))*9.81;
-    double c = -maxL*Yc();
+    double c = maxL*Yc();                               // CHANGED -- Check again 
     return (-b + pow(b*b - 4*a*c,.5))/(2*a);
   
 }
