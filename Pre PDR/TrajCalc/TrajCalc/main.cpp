@@ -1,10 +1,11 @@
 //
 //  main.cpp
-//  Sail
+//  TrajCalc
 //
-//  Created by Andrew Tenorio on 4/20/16.
-//  Copyright © 2016 AndrewTenorio. All rights reserved.
+//  Created by Pedram Madanchian on 4/26/16.
+//  Copyright © 2016 Pedram Madanchian. All rights reserved.
 //
+
 
 
 #include <iostream>
@@ -98,12 +99,12 @@ double Lift2(double a){
     return cL2(a)*q*Area();
 }
 double maxLift(){
-     double max =0, loc = 0;
+    double max =0, loc = 0;
     for (double i =0; i <= alphaStall; i+= .5){
         loc = Lift2(i);
         if(loc>max){
             max = loc;}
-  
+        
     }
     
     return max;
@@ -134,9 +135,9 @@ double mMast(){
 double DAxle(){
     double a = (ld*rhoBody+rhoAxle)*9.81/2;             // LOOK AT THIS AGAIN (PEDRAM) -- Checked
     double b = (mEnd+.5*(mc+mMast()+mFront))*9.81;
-    double c = maxL*Yc();                               // CHANGED -- Check again
+    double c = -maxL*Yc();                               // CHANGED -- Check again
     return (-b + pow(b*b - 4*a*c,.5))/(2*a);
-  
+    
 }
 
 double LBody(){
@@ -144,7 +145,7 @@ double LBody(){
 }
 double lMast(){
     return (maxLift()*Yc()-mFront*9.81*LBody()+.5*rhoBody*pow(LBody(),2)*9.81)/((mc+mMast())*9.81);
-            }
+}
 
 
 // Mass
@@ -155,9 +156,9 @@ double mTotal(){
 // Kinematics
 double ax(){
     double a = (1/mTotal()) * ((Lift()*cos((alpha+theta())*PI/180)+Drag()*sin((alpha+theta())*PI/180))*sin((alpha+theta())*PI/180) - Drag());
-
     
-return a;
+    
+    return a;
 }
 double ay(){
     double a = ax()*tan((alpha+theta())*PI/180);
@@ -179,7 +180,7 @@ double xCovered(){
 int main() {
     
     
-
+    
     double camber1=0;
     double AR1=0;
     double area1=0;
@@ -203,13 +204,13 @@ int main() {
     
     
     
-// Loop
+    // Loop
     
     
     for (camber = minCamber; camber <= maxCamber; camber+= .005)
     {
         for(AR = 2; AR <= maxAR; AR+= .5)
-           
+            
         {
             for(taperRatio = 1; taperRatio >= 0; taperRatio-= .1)
             {
@@ -220,26 +221,26 @@ int main() {
                 for(alpha = 0; alpha <= alphaStall; alpha += .5)
                 {
                     
-//                    cout<<"AR: "<<AR<<endl;
-//                    cout<<"TR: "<<taperRatio<<endl;
-//                    cout<<"camber: "<<camber<<endl;
-//                    cout<<"Span: "<<Span()<<endl;
-//                    cout<<"alpha: "<<alpha<<endl;
-//                    cout<<"theta: "<<theta()<<endl;
-//                
-//                    cout<<"lift: "<<Lift()<<endl;
-//                    cout<<"drag: "<<Drag()<<endl;
-////                    cout<<"Theta: "<<theta()<<endl;
-////                    cout<<"CD: "<<cD()<<endl;
-////                    cout<<"CL: "<<cL()<<endl;
-////                    cout<<"Lift: "<<Lift()<<endl;
-////                    cout<<"Drag: "<<Drag()<<endl;
-//                    cout<<"ax: "<<ax()<<endl;
-//                    cout<<"ay: "<<ay()<<endl;
-////                    cout<<"Max Lift: " <<maxL<<endl;
-////                    cout<<"mass: "<<mTotal()<<endl;
-//                    cout<<"Vfinal: "<<vFinal()<<endl;
-//                      cin.get();
+                    //                    cout<<"AR: "<<AR<<endl;
+                    //                    cout<<"TR: "<<taperRatio<<endl;
+                    //                    cout<<"camber: "<<camber<<endl;
+                    //                    cout<<"Span: "<<Span()<<endl;
+                    //                    cout<<"alpha: "<<alpha<<endl;
+                    //                    cout<<"theta: "<<theta()<<endl;
+                    //
+                    //                    cout<<"lift: "<<Lift()<<endl;
+                    //                    cout<<"drag: "<<Drag()<<endl;
+                    ////                    cout<<"Theta: "<<theta()<<endl;
+                    ////                    cout<<"CD: "<<cD()<<endl;
+                    ////                    cout<<"CL: "<<cL()<<endl;
+                    ////                    cout<<"Lift: "<<Lift()<<endl;
+                    ////                    cout<<"Drag: "<<Drag()<<endl;
+                    //                    cout<<"ax: "<<ax()<<endl;
+                    //                    cout<<"ay: "<<ay()<<endl;
+                    ////                    cout<<"Max Lift: " <<maxL<<endl;
+                    ////                    cout<<"mass: "<<mTotal()<<endl;
+                    //                    cout<<"Vfinal: "<<vFinal()<<endl;
+                    //                      cin.get();
                     // find max v but still in size
                     
                     if(vFinal()>vf1 && DAxle()<trackWidth && Span()< trackHeight*.7 )
@@ -256,7 +257,7 @@ int main() {
                         alpha1 = alpha;
                         theta1 = theta();
                         yc1 = Yc();
-                    
+                        
                         m1 = mTotal();
                         tt1 = tTack();
                         ax1 = ax();
@@ -270,46 +271,46 @@ int main() {
                         
                     }
                     
-                        
+                    
                 }
             }
         }
     }
-  
     
-     cout<<"camber: "<<camber1<<endl;
-     cout<<"Taper: "<<tR1<<endl;
-     cout<<"AR: "<<AR1<<endl;
-     cout<<"Span: "<<span1<<endl;
-     cout<<"Chord: "<<cRoot<<endl;
+    
+    cout<<"camber: "<<camber1<<endl;
+    cout<<"Taper: "<<tR1<<endl;
+    cout<<"AR: "<<AR1<<endl;
+    cout<<"Span: "<<span1<<endl;
+    cout<<"Chord: "<<cRoot<<endl;
     cout<<"Area: "<<area1<<endl;
-     cout<<"CE (y): "<<yc1<<endl;
-     cout<<"Axle: "<<axle1<<endl;
-     cout<<"Body: "<<body1<<endl;
+    cout<<"CE (y): "<<yc1<<endl;
+    cout<<"Axle: "<<axle1<<endl;
+    cout<<"Body: "<<body1<<endl;
     cout<<"x Mast: "<<lMast()<<endl;
-     cout<<"alpha: "<<alpha1<<endl;
-     cout<<"theta: "<<theta1<<endl;
-     cout<<"V Final: "<<vf1<<endl;
-     cout<<"Mass: "<<m1<<endl<<endl;
+    cout<<"alpha: "<<alpha1<<endl;
+    cout<<"theta: "<<theta1<<endl;
+    cout<<"V Final: "<<vf1<<endl;
+    cout<<"Mass: "<<m1<<endl<<endl;
     cout<<"ax: "<<ax1<<endl;
     cout<<"ay: "<<ay1<<endl;
     cout<<"Lift: "<<lift1<<endl;
     cout<<"Drag: "<<drag1<<endl;
     cout<<"CD: "<<cd1<<endl;
     cout<<"Time to tack: "<<ttack1<<endl;
-  
+    
     
     
 }
 
 
-              
-                    
-                 
-    
-    
-    
 
- 
+
+
+
+
+
+
+
 
 
