@@ -22,11 +22,11 @@ double trackLength = 4.2672;
 double trackHeight = 1.2192;
 
 // Component Masses [kg]
-double m1d = .143;
-double m2d = .1695;
+double m1d = .143;         // 1d wheel
+double m2d = .1695;        // 2d wheel
 double mServo = .04;
-double mBatP = .010;
-double mBat = .060;
+double mBatP = .010;       // Battery Pack
+double mBat = .060;        // Battery
 
 double mc = 2*mServo + mBatP + mBat;
 double mEnd = m1d;
@@ -51,7 +51,7 @@ double cD0 = .03858;
 double alphaStall = 7.5;
 
 // Base
-double ld = 1.5;
+double ld = 1.5;            //lenght/width of the car
 double rhoBody = rhoWH;
 double rhoAxle = rhoWH;
 double rhoMast = rhoWH;
@@ -132,7 +132,7 @@ double mMast(){
     return Span()*rhoMast;
 }
 double DAxle(){
-    double a = (ld*rhoBody+rhoAxle)*9.81/2;
+    double a = (ld*rhoBody+rhoAxle)*9.81/2;             // LOOK AT THIS AGAIN (PEDRAM) -- Checked
     double b = (mEnd+.5*(mc+mMast()+mFront))*9.81;
     double c = -maxL*Yc();
     return (-b + pow(b*b - 4*a*c,.5))/(2*a);
