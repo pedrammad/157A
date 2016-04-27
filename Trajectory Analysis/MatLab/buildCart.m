@@ -10,6 +10,7 @@ global mEnd;
 % Uses 3D characteristics and weights to define base dimensions
 
 % Sail Geometric  Properties 
+sailCart.AR = AR;
 sailCart.cTip = taper*cRoot;
 sailCart.area = cRoot * 0.5 * (1 + taper)*span;
 sailCart.yc = ((1 + 2*taper)/(1 + taper))*(span/3);
