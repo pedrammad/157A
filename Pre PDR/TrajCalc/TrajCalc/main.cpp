@@ -298,7 +298,7 @@ int main() {
     cout<<"Drag: "<<drag1<<endl;
     cout<<"CD: "<<cd1<<endl;
     cout<<"Time to tack: "<<ttack1<<endl;
-    
+    //cout<<"Distance Covered: "<<ttack1<<endl;
     
     
 }
