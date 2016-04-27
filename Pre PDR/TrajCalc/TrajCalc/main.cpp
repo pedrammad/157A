@@ -277,7 +277,7 @@ int main() {
         }
     }
     
-    
+    cout <<"Axle Diameter: "<<DAxle()<<endl;
     cout<<"camber: "<<camber1<<endl;
     cout<<"Taper: "<<tR1<<endl;
     cout<<"AR: "<<AR1<<endl;
@@ -298,7 +298,7 @@ int main() {
     cout<<"Drag: "<<drag1<<endl;
     cout<<"CD: "<<cd1<<endl;
     cout<<"Time to tack: "<<ttack1<<endl;
-    //cout<<"Distance Covered: "<<ttack1<<endl;
+    cout<<"Distance Covered: "<<xCovered()<<endl;
     
     
 }
