@@ -9,76 +9,78 @@ global vWind;
 rollingFriction = .03 * sailCart.totalMass * 9.81;
 
 % Time incriment 
-dt = .2;
+dt = .01;
 
 % loop through alpha, calculate vf 
-alpha = 3.5:0.5:7.5;
 
-%alpha = 6.5;
-XX = sprintf ('@ Alpha = ');
-disp(XX)
-disp(alpha)
+startAlpha = 3.5;
+stallAlpha = 7.5;
+alpha = startAlpha:0.5:stallAlpha;
+for j = 1: length(alpha);
 
-cL = (sailCart.cLa*alpha + sailCart.cL0 );
-cD = sailCart.cD0 + sailCart.k*cL.^2;
+disp (['@ Alpha = ' num2str(alpha(j))]);
 
-vx = 0;
-vy = 0;
 
-ax = 0;
-ay = 0;
+cL(j) = (sailCart.cLa*alpha(j) + sailCart.cL0 );
+cD(j) = sailCart.cD0 + sailCart.k*cL(j).^2;
 
-xCart = 0;
-yCart = 0;
+vx(j) = 0;
+vy(j) = 0;
+
+ax(j) = 0;
+ay(j) = 0;
+
+xCart(j) = 0;
+yCart(j) = 0;
 
 t = 0;
 
-while yCart < trackWidth - sailCart.wAxle;
+while yCart(j) < trackWidth - sailCart.wAxle;
     
-vx = vx + ax * dt;
-vy = vy + ay * dt;
+vx(j) = vx(j) + ax(j) * dt;
+vy(j) = vy(j) + ay(j) * dt;
 
-q = .5*rhoATM*sailCart.area*(vWind + vx ).^2;
-Lift = cL .* q;
-Drag = cD .* q;
+q(j) = .5*rhoATM*sailCart.area*(vWind + vx(j) ).^2;
+Lift(j) = cL(j) .* q(j);
+Drag(j) = cD(j) .* q(j);
 
-theta = alpha + .5 * atan(Lift./Drag) * (180/pi);
-beta = (theta + alpha) * pi/180;
+theta(j) = alpha(j) + .5 * atan(Lift(j)./Drag(j)) * (180/pi);
+beta(j) = (theta(j) + alpha(j)) * pi/180;
 
-ax = (1/sailCart.totalMass) * (.5 * Lift .* sin(2 * beta) - .5 * Drag.* ( 1 + cos(2 * beta)) - rollingFriction * cos(beta));
-ay = ax .* tan (beta);
+ax(j) = (1/sailCart.totalMass) * (.5 * Lift(j) .* sin(2 * beta(j)) - .5 * Drag(j).* ( 1 + cos(2 * beta(j))) - rollingFriction * cos(beta(j)));
+ay(j) = ax(j) .* tan (beta(j));
 
-xCart = xCart + vx * dt;
-yCart = yCart + vy * dt;
+xCart(j) = xCart(j) + vx(j) * dt;
+yCart(j) = yCart(j) + vy(j) * dt;
 
 t = t + dt;
-% if t>5
-%     YY = sprintf ('Alpha = %d is no good;  ',alpha);
-% disp(YY)
-%     break
-% end
+if t>5          % END if it takes more than 5sec to go from edge to edge
+disp(['Alpha = ' num2str(alpha(j)) ' is no good'])
+    break
+end
+end
 
-TT =sprintf ('@Time  = %d; x_Acceleration = ',t);
-disp (TT)
-disp(ax)
+
+disp(['tack 0 @ t = ' num2str(t) ' seconds and a_x = ' num2str(ax(j)) 'm/s^2']);
+
+
+sailCart.vFinal(j) = vx(j);
 
 end
 
-sailCart.vFinal = vx;
+% vx
+% [maxValue,maxIndex] = max(vx);
+% vxMax = vx(maxIndex);
+% alphaMax = alpha(maxIndex);
+% display(['Max Velocity of ' num2str(vxMax)  ' m/s occurs @ Alpha =' num2str(alphaMax)]);
 
-[maxValue,maxIndex] = max(vx);
-vxMax = vx(maxIndex);
-alphaMax = alpha(maxIndex);
-disp(XX)
-disp(alpha)
-FF = sprintf ('Final x_Velocity @ Tack 0: ');
-disp (FF)
-disp(vx)
+
 sailCart.xFinal = xCart;
 sailCart.timeFinal = t;
 sailCart.totalTime = (trackLength./sailCart.xFinal)*sailCart.timeFinal;
-
-DD= sprintf ('Max Velocity of %d occurs @ Alpha =',vxMax);
-display(DD)
-alphaMax
+sailCart.totalTime
+[minValue,fastestIndex] = min(sailCart.totalTime);
+fastestTime = sailCart.totalTime(fastestIndex);
+fastestAlpha= alpha(fastestIndex);
+display(['Fastest Trip of ' num2str(fastestTime)  ' secods occurs @ Alpha =' num2str(fastestAlpha)]);
 disp('Andrew Da Chump')
