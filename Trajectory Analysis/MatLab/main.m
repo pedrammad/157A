@@ -38,8 +38,7 @@ rhoWS = 0.0772;
 sailCart = buildCart(.3, .6, 3.5, .84, 5.07,0, .15, 7.5, rhoWH, rhoWH, rhoWH);
 i =1;
 for AR = 1:.5:5
-    for taper = 0:.1:1
-       sailCart(i) = buildCart(.3,taper,AR,.84, 5.06, 0 , .15, 7.6, rhoWH, rhoWH, rhoWH);
+       sailCart(i) = buildCart(, 0, AR , 5.06, 0 , .15, 7.6, rhoWH, rhoWH, rhoWH);
        i = i+1;
    end
 end

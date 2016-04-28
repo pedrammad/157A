@@ -37,7 +37,7 @@ sailCart.wAxle = (-b + (b^2 - 4*a*c)^.5)/(2*a);
 sailCart.lBody = lw*sailCart.wAxle;
 
 % Drag
-e = 4.61*(1 - 0.045*sailCart.AR^0.68)*(cos(sweep*pi/180))^0.15 - 3.1; % Raymer pg 299
+e = 4.61*(1 - 0.045*sailCart.AR^0.68)*(cos(sweep*pi/180))^0.15 - 3.1;
 sailCart.k = 1/(pi*sailCart.AR*e);
 sailCart.cD0 = cd0;
 
