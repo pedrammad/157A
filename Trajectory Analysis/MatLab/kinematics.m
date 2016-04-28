@@ -18,7 +18,7 @@ stallAlpha = 7.5;
 alpha = startAlpha:0.5:stallAlpha;
 for j = 1: length(alpha);
 
-disp (['@ Alpha = ' num2str(alpha(j))]);
+disp (['When Alpha = ' num2str(alpha(j))]);
 
 
 cL(j) = (sailCart.cLa*alpha(j) + sailCart.cL0 );
@@ -54,7 +54,7 @@ xCart(j) = xCart(j) + vx(j) * dt;
 yCart(j) = yCart(j) + vy(j) * dt;
 
 t = t + dt;
-if t>5          % END if it takes more than 5sec to go from edge to edge
+if t>25          % END if it takes more than 5sec to go from edge to edge
 disp(['Alpha = ' num2str(alpha(j)) ' is no good'])
     break
 end
@@ -82,5 +82,5 @@ sailCart.totalTime
 [minValue,fastestIndex] = min(sailCart.totalTime);
 fastestTime = sailCart.totalTime(fastestIndex);
 fastestAlpha= alpha(fastestIndex);
-display(['Fastest Trip of ' num2str(fastestTime)  ' secods occurs @ Alpha =' num2str(fastestAlpha)]);
+display(['Fastest Trip of ' num2str(fastestTime)  ' seconds occurs @ Alpha =' num2str(fastestAlpha) ' degrees']);
 disp('Andrew Da Chump')
