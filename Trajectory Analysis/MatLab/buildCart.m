@@ -15,7 +15,7 @@ sailCart.span = AR*cRoot*(1 + taper)*.5;
 sailCart.AR = AR;
 sailCart.cTip = taper*cRoot;
 sailCart.area = cRoot * 0.5 * (1 + taper)*sailCart.span;
-sailCart.yc = ((1 + 2*taper)/(1 + taper))*(sailCart.span/3);
+sailCart.yc = ((1 + 2*taper)/(1 + taper))*(sailCart.span/3) + .0634/2;
 sailCart.cRoot = cRoot;
 % Lift
 sailCart.threeD = sailCart.AR/(2 + (4 + sailCart.AR^2)^.5);
@@ -40,8 +40,8 @@ e = 4.61*(1 - 0.045*sailCart.AR^0.68)*(cos(sweep*pi/180))^0.15 - 3.1; % Raymer p
 sailCart.k = 1/(pi*sailCart.AR*e);
 sailCart.cD0 = cd0;
 
-% Total Mass
-sailCart.totalMass = mMid + sailCart.mMast + 2*mEnd + mFront + rhoBody*sailCart.lBody + rhoAxle*sailCart.wAxle;
+% Total Mass (20% Contingency)
+sailCart.totalMass = (mMid + sailCart.mMast + 2*mEnd + mFront + rhoBody*sailCart.lBody + rhoAxle*sailCart.wAxle)*1.2;
 
 
 

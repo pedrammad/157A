@@ -16,7 +16,7 @@ dt = .2;
 
 alpha = 7.5;
 cL = (sailCart.cLa*alpha + sailCart.cL0 );
-cD = sailCart.cD0 + cL;
+cD = sailCart.cD0 + sailCart.k*cL^2;
 
 vx = 0;
 vy = 0;
@@ -46,11 +46,12 @@ ay = ax * tan (beta);
 
 xCart = xCart + vx * dt;
 yCart = yCart + vy * dt;
-
+disp(ax)
 t = t + dt;
 end
 
 sailCart.vFinal = vx;
-sailCart.alpha = alpha;
-sailCart.theta = theta;
+sailCart.xFinal = xCart;
+sailCart.timeFinal = t;
+sailCart.totalTime = (trackLength/sailCart.xFinal)*sailCart.timeFinal;
 disp('Andrew')
