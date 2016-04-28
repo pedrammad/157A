@@ -11,20 +11,19 @@ global mEnd;
 
 % Sail Geometric  Properties 
 taper = 0;
-sialCart.Span = AR*cRoot*(1 + taper)*.5;
+sailCart.span = AR*cRoot*(1 + taper)*.5;
 sailCart.AR = AR;
 sailCart.cTip = taper*cRoot;
-sailCart.area = cRoot * 0.5 * (1 + taper)*span;
-sailCart.yc = ((1 + 2*taper)/(1 + taper))*(span/3);
-
+sailCart.area = cRoot * 0.5 * (1 + taper)*sailCart.span;
+sailCart.yc = ((1 + 2*taper)/(1 + taper))*(sailCart.span/3);
+sailCart.cRoot = cRoot;
 % Lift
-threeD = sailCart.AR/(2 + (4 + sailCart.AR^2)^.5);
-sailCart.cLa = cla * threeD;
-sailCart.cL0 = cl0 * threeD;
-sailCart.maxL = 2.6;
-% 0.5*rhoATM*vWind^2*sailCart.area*(sailCart.cLa*aStall*pi/180 + sailCart.cL0);
+sailCart.threeD = sailCart.AR/(2 + (4 + sailCart.AR^2)^.5);
+sailCart.cLa = cla * sailCart.threeD;
+sailCart.cL0 = cl0 * sailCart.threeD;
+sailCart.maxL = 0.5*rhoATM*vWind^2*sailCart.area*(sailCart.cLa*aStall + sailCart.cL0);
 
-sailCart.mMast = span*rhoMast;
+sailCart.mMast = sailCart.span*rhoMast;
 
 % Axle
 lw = 1.5;

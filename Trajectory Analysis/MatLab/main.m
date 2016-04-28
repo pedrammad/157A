@@ -4,6 +4,8 @@ clear all;
 %% Course Constants 
 
 % Track Dimensions [m]
+global trackWidth;
+global trackLength;
 trackWidth = 1.2192; 
 trackLength = 4.2672; 
 trackHeight = 1.2192; 
@@ -30,18 +32,25 @@ mEnd = m1D;
 % Dowel Densities [kg/m]
 rhoWH = 0.08934;
 rhoWS = 0.0772;
-%% fix span and stuff parameters they are interdependent do not need so many inputs.
-% other than that looking not too bad we dont need to worry about
-% computation time like monte carlo this is ok. 
 
-%buildCart[cRoot, taper, AR, span, cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast]
-sailCart = buildCart(.3, .6, 3.5, .84, 5.07,0, .15, 7.5, rhoWH, rhoWH, rhoWH);
-i =1;
-for AR = 1:.5:5
-       sailCart(i) = buildCart(, 0, AR , 5.06, 0 , .15, 7.6, rhoWH, rhoWH, rhoWH);
-       i = i+1;
-   end
-end
+%% Test Sections
+
+% buildCart(cRoot, AR, sweep, cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast)
+% cla in degree^-1 a stall in degrees
+
+cRoot = .25;
+AR = 5;
+sweep = 0;
+cla = 2*pi*pi/180;
+cl0 = 0;
+cd0 = .02;
+aStall = 9;
+rhoAxle = rhoWH;
+rhoBody = rhoWH;
+rhoMast = rhoWH;
+
+sail1 = buildCart(cRoot, AR, sweep, cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast);
+sail1 = kinematics(sail1);
 
 
 
