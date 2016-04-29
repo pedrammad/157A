@@ -49,8 +49,10 @@ rhoAxle = rhoWH;
 rhoBody = rhoWH;
 rhoMast = rhoWH;
 
-sail1 = buildCart(cRoot, AR, sweep, cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast);
-sail1 = kinematics(sail1);
+car = buildCart(cRoot, AR, sweep, cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast);
+car  = kinematics(car);
+
+
 
 
 
