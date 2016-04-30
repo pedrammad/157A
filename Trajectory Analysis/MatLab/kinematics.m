@@ -44,7 +44,7 @@ q(j) = .5*rhoATM*sailCart.area*(vWind + vx(j) ).^2;
 Lift(j) = cL(j) .* q(j);
 Drag(j) = cD(j) .* q(j);
 
-theta(j) = alpha(j) + .5 * atan(Lift(j)./Drag(j)) * (180/pi);
+theta(j) = -alpha(j) + .5 * atan(-Lift(j)./Drag(j)) * (180/pi);
 beta(j) = (theta(j) + alpha(j)) * pi/180;
 
 ax(j) = (1/sailCart.totalMass) * (.5 * Lift(j) .* sin(2 * beta(j)) - .5 * Drag(j).* ( 1 + cos(2 * beta(j))) - rollingFriction * cos(beta(j)));
@@ -54,10 +54,11 @@ xCart(j) = xCart(j) + vx(j) * dt;
 yCart(j) = yCart(j) + vy(j) * dt;
 
 t(j) = t(j) + dt;
-if t>25          % END if it takes more than 5sec to go from edge to edge
+if t>30          % END if it takes more than 5sec to go from edge to edge
 disp(['Alpha = ' num2str(alpha(j)) ' is no good'])
     break
 end
+
 end
 
 
@@ -65,15 +66,20 @@ fprintf(['\t t =\t' num2str(t(j)) '\t seconds & \n \t a_x =\t' ...
     num2str(ax(j)) '\t m/s^2 & \n \t v_x =\t' ...
     num2str(vx(j)) '\t m/s & \n \t x =\t' ...
     num2str(xCart(j)) '\t m/s & \n \t theta =\t' ...
-    num2str(theta(j)) '\t degrees & \n \t Lift = \t' ...
-    num2str(Lift(j)) '\t N & \n \t Drag = \t'...
-    num2str(Drag(j)) '\t N \n \n'])
-
+    num2str(theta(j)) '\t degrees & \n \t beta =\t' ...
+    num2str(beta(j)) '\t radians \n\n'])
     
 
 
+if xCart(j) < 0
+    xCart(j) = 0.0001;
+end
+if vx(j) <0
+    vx(j) = 0.0001;
+end
 
 sailCart.vFinal(j) = vx(j);
+
 
 end
 
@@ -86,7 +92,6 @@ end
 
 sailCart.xFinal = xCart;
 sailCart.timeFinal = t;
-
 sailCart.totalTime = (trackLength./sailCart.xFinal).*sailCart.timeFinal;
 [minValue,fastestIndex] = min(sailCart.totalTime);
 fastestTime = sailCart.totalTime(fastestIndex);
