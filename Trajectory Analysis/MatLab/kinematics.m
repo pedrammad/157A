@@ -14,7 +14,7 @@ dt = .01;
 % loop through alpha, calculate vf 
 
 startAlpha = 3.5;
-stallAlpha = 7.5;
+stallAlpha = 27.5;
 alpha = startAlpha:0.5:stallAlpha;
 for j = 1: length(alpha);
 
@@ -44,8 +44,9 @@ q(j) = .5*rhoATM*sailCart.area*(vWind + vx(j) ).^2;
 Lift(j) = cL(j) .* q(j);
 Drag(j) = cD(j) .* q(j);
 
-theta(j) = -alpha(j) + .5 * atan(-Lift(j)./Drag(j)) * (180/pi);
+theta(j) = -alpha(j) + .5 * atan(-Lift(j)./Drag(j)) * (180/pi)+90; %2nd answer in the solution set
 beta(j) = (theta(j) + alpha(j)) * pi/180;
+beta_deg(j) = beta(j)*180/pi;
 
 ax(j) = (1/sailCart.totalMass) * (.5 * Lift(j) .* sin(2 * beta(j)) - .5 * Drag(j).* ( 1 + cos(2 * beta(j))) - rollingFriction * cos(beta(j)));
 ay(j) = ax(j) .* tan (beta(j));
@@ -61,13 +62,16 @@ end
 
 end
 
-
+% All these outputs are right before the first turn occurs (once the sail
+% reaches the opposite edge)
 fprintf(['\t t =\t' num2str(t(j)) '\t seconds & \n \t a_x =\t' ...
     num2str(ax(j)) '\t m/s^2 & \n \t v_x =\t' ...
     num2str(vx(j)) '\t m/s & \n \t x =\t' ...
     num2str(xCart(j)) '\t m/s & \n \t theta =\t' ...
     num2str(theta(j)) '\t degrees & \n \t beta =\t' ...
-    num2str(beta(j)) '\t radians \n\n'])
+    num2str(beta_deg(j)) '\t degrees & \n \t Lift = \t' ...
+    num2str(Lift(j)) '\t N & \n \t Drag = \t'...
+    num2str(Drag(j)) '\t N \n\n'])
     
 
 
@@ -78,7 +82,7 @@ if vx(j) <0
     vx(j) = 0.0001;
 end
 
-sailCart.vFinal(j) = vx(j);
+sailCart.vFinal(j) = vx(j);     %Velocity at the turn (before the turn)
 
 
 end
@@ -89,7 +93,8 @@ end
 % alphaMax = alpha(maxIndex);
 % display(['Max Velocity of ' num2str(vxMax)  ' m/s occurs @ Alpha =' num2str(alphaMax)]);
 
-
+xCart
+t
 sailCart.xFinal = xCart;
 sailCart.timeFinal = t;
 sailCart.totalTime = (trackLength./sailCart.xFinal).*sailCart.timeFinal;
@@ -97,4 +102,4 @@ sailCart.totalTime = (trackLength./sailCart.xFinal).*sailCart.timeFinal;
 fastestTime = sailCart.totalTime(fastestIndex);
 fastestAlpha= alpha(fastestIndex);
 display(['Fastest Trip of ' num2str(fastestTime)  ' seconds occurs @ Alpha =' num2str(fastestAlpha) ' degrees']);
-disp('Andrew Da Chump')
+

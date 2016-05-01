@@ -1,18 +1,18 @@
 clc;
 close all;
- l = 	3.152;
- d = 	0.35986;
+ L = 	3.152;
+ D = 	0.35986;
 
  alpha = 7.5;
- theta = 0:.2:65;
- 
+ theta = 0:.1:65;
+ beta_deg=(alpha + theta);
  beta = (alpha + theta)*pi/180;
  
- y = l * cos(2 * beta) + d * sin(2 * beta);
+ y = L * cos(2 * beta) + D * sin(2 * beta);
  z = zeros(1, length(y));
  
  s  = tan(2*beta);
- t = -l/d* ones(length(y));
+ t(1:length(y)) = -L/D;
  
  figure
  hold on;
@@ -26,5 +26,6 @@ close all;
  plot(theta,t, 'linewidth', 2, 'color','k');
  legend('tan(2beta)','-l/d')
 
- 
- disp(l * cos(2*ans) + d * sin(2*ans))
+beta2 = 0.5*atan(-L/D)
+L * cos(2 * beta2) + D * sin(2 * beta2)
+ %disp(l * cos(2*ans) + d * sin(2*ans))
