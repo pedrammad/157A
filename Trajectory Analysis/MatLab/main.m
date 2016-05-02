@@ -77,11 +77,14 @@ car = buildCart(cRoot(i), AR(i), sweep(i), cla, cl0, cd0, aStall, rhoAxle, rhoBo
 fprintf (['Case ' num2str(i) ': When AR =\t' num2str(AR(i)) ' & cRoot =\t' num2str(cRoot(i)) ' & sweep =\t' num2str(sweep(i)) '\n']);
 [car,tFastest]  = kinematics(car);
 tFastWing(i) = tFastest; 
+
+carSpecs(i) = car;
 fprintf ('\n')
 end        
 
 [minValue,fastestIndex] = min(tFastWing);
 tFastMax = tFastWing(fastestIndex)
+carOptimized = carSpecs(fastestIndex)
 fprintf (['FASTEST Travel Time @Case ' num2str(fastestIndex) ': When AR =\t' ...
                   num2str(AR(fastestIndex)) ' & cRoot =\t' ...
                   num2str(cRoot(fastestIndex)) ' & sweep =\t' ...
