@@ -1,4 +1,4 @@
-function [sailCart] = kinematics(sailCart)
+function [sailCart,fastestTime] = kinematics(sailCart)
 
 global trackWidth;
 global trackLength;
