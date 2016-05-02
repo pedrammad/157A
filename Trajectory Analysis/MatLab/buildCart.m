@@ -10,7 +10,7 @@ global mEnd;
 % Uses 3D characteristics and weights to define base dimensions
 
 % Sail Geometric  Properties 
-taper = 0;
+taper = 0;          % GOTTA CHANE LATER
 sailCart.span = AR*cRoot*(1 + taper)*.5;
 sailCart.AR = AR;
 sailCart.cTip = taper*cRoot;

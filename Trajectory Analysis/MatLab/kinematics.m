@@ -18,7 +18,7 @@ stallAlpha = 27.5;
 alpha = startAlpha:0.5:stallAlpha;
 for j = 1: length(alpha);
 
-fprintf (['When Alpha =\t' num2str(alpha(j)) ' degrees, tack 0 occurs @ \n']);
+%  fprintf (['When Alpha =\t' num2str(alpha(j)) ' degrees, tack 0 occurs @ \n']);
 
 
 cL(j) = (sailCart.cLa*alpha(j) + sailCart.cL0 );
@@ -56,7 +56,7 @@ yCart(j) = yCart(j) + vy(j) * dt;
 
 t(j) = t(j) + dt;
 if t>30          % END if it takes more than 5sec to go from edge to edge
-disp(['Alpha = ' num2str(alpha(j)) ' is no good'])
+%  disp(['Alpha = ' num2str(alpha(j)) ' is no good'])
     break
 end
 
@@ -64,22 +64,22 @@ end
 
 % All these outputs are right before the first turn occurs (once the sail
 % reaches the opposite edge)
-fprintf(['\t t =\t' num2str(t(j)) '\t seconds & \n \t a_x =\t' ...
-    num2str(ax(j)) '\t m/s^2 & \n \t v_x =\t' ...
-    num2str(vx(j)) '\t m/s & \n \t x =\t' ...
-    num2str(xCart(j)) '\t m/s & \n \t theta =\t' ...
-    num2str(theta(j)) '\t degrees & \n \t beta =\t' ...
-    num2str(beta_deg(j)) '\t degrees & \n \t Lift = \t' ...
-    num2str(Lift(j)) '\t N & \n \t Drag = \t'...
-    num2str(Drag(j)) '\t N \n\n'])
+% fprintf(['\t t =\t' num2str(t(j)) '\t seconds & \n \t a_x =\t' ...
+%     num2str(ax(j)) '\t m/s^2 & \n \t v_x =\t' ...
+%     num2str(vx(j)) '\t m/s & \n \t x =\t' ...
+%     num2str(xCart(j)) '\t m/s & \n \t theta =\t' ...
+%     num2str(theta(j)) '\t degrees & \n \t beta =\t' ...
+%     num2str(beta_deg(j)) '\t degrees & \n \t Lift = \t' ...
+%     num2str(Lift(j)) '\t N & \n \t Drag = \t'...
+%     num2str(Drag(j)) '\t N \n\n'])
     
 
 
 if xCart(j) < 0
-    xCart(j) = 0.0001;
+    xCart(j) = NaN;
 end
 if vx(j) <0
-    vx(j) = 0.0001;
+    vx(j) = NaN;
 end
 
 sailCart.vFinal(j) = vx(j);     %Velocity at the turn (before the turn)
@@ -93,8 +93,8 @@ end
 % alphaMax = alpha(maxIndex);
 % display(['Max Velocity of ' num2str(vxMax)  ' m/s occurs @ Alpha =' num2str(alphaMax)]);
 
-xCart
-t
+%xCart
+%t
 sailCart.xFinal = xCart;
 sailCart.timeFinal = t;
 sailCart.totalTime = (trackLength./sailCart.xFinal).*sailCart.timeFinal;
@@ -103,3 +103,4 @@ fastestTime = sailCart.totalTime(fastestIndex);
 fastestAlpha= alpha(fastestIndex);
 display(['Fastest Trip of ' num2str(fastestTime)  ' seconds occurs @ Alpha =' num2str(fastestAlpha) ' degrees']);
 
+%sailCart

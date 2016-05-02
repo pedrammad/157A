@@ -36,23 +36,48 @@ rhoWS = 0.0772;
 %% Test Sections
 
 % buildCart(cRoot, AR, sweep, cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast)
-% cla in degree^-1 a stall in degrees
+% [cla] = degree^-1, [astall]  degrees
 
-cRoot = .25;
-AR = 5;
-sweep = 0;
+
+
 cla = 2*pi*pi/180;
-cl0 = 1.1;
-cd0 = .03;
-aStall = 9;
-rhoAxle = rhoWH;
-rhoBody = rhoWH;
-rhoMast = rhoWH;
+    cl0 = 1.1;
+    cd0 = .03;
+    aStall = 27.5;         %Stall Angle
+    rhoAxle = rhoWH;
+    rhoBody = rhoWH;
+    rhoMast = rhoWH;
 
-car = buildCart(cRoot, AR, sweep, cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast);
+wing = zeros(125,3);
+iWing = 0;
+AR = 1:5;             
+sweep = 0:8:32;
+cRoot = .1:0.1:0.5;
+
+for iAR = 1:length(AR)
+    for iSweep = 1:length(sweep)
+        for icRoot = 1:length(cRoot)
+            
+             iWing = iWing +1;
+             wing(iWing, 1)= AR(iAR);
+             wing(iWing, 2)= sweep(iSweep);
+             wing(iWing, 3)= cRoot(icRoot);
+
+        end
+    end
+end
+
+for i = 1:iWing
+   
+    AR(i) = wing(i,1);
+    sweep(i) = wing(i,2);
+    cRoot(i) = wing(i,3);
+
+car = buildCart(cRoot(i), AR(i), sweep(i), cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast);
+fprintf (['Case ' num2str(i) ': When AR =\t' num2str(AR(i)) ' & cRoot =\t' num2str(cRoot(i)) ' & sweep =\t' num2str(sweep(i)) '\n']);
 car  = kinematics(car);
-
-
+fprintf ('\n')
+end        
 
 
 
