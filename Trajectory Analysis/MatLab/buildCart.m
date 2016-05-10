@@ -10,7 +10,7 @@ global mEnd;
 % Uses 3D characteristics and weights to define base dimensions
 
 % Sail Geometric  Properties 
-taper = 0;          % GOTTA CHANE LATER
+taper = 0.0254/cRoot;          % GOTTA CHANE LATER
 sailCart.span = AR*cRoot*(1 + taper)*.5;
 sailCart.AR = AR;
 sailCart.cTip = taper*cRoot;
@@ -21,7 +21,10 @@ sailCart.cRoot = cRoot;
 sailCart.threeD = sailCart.AR/(2 + (4 + sailCart.AR^2)^.5);
 sailCart.cLa = cla * sailCart.threeD;
 sailCart.cL0 = cl0 * sailCart.threeD;
-sailCart.maxL = 0.5*rhoATM*vWind^2*sailCart.area*(sailCart.cLa*aStall + sailCart.cL0);
+sailCart.cD0 = cd0 * sailCart.threeD;
+
+cd_worst = 1.75; % Online Resources
+sailCart.maxL = 0.5*rhoATM*vWind^2*sailCart.area*(cd_worst);
 
 sailCart.mMast = sailCart.span*rhoMast;
 
@@ -48,6 +51,7 @@ sailCart.totalMass = (mMid + sailCart.mMast + 2*mEnd + mFront + rhoBody*sailCart
 
 
 
-
+% msass change as camber changes 
+% what angle it tips over at 
 
 

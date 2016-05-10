@@ -13,9 +13,9 @@ dt = .01;
 
 % loop through alpha, calculate vf 
 
-startAlpha = 3.5;
-stallAlpha = 27.5;
-alpha = startAlpha:0.5:stallAlpha;
+startAlpha = 15;
+stallAlpha = 25;
+alpha = startAlpha:stallAlpha;
 for j = 1: length(alpha);
 
 %  fprintf (['When Alpha =\t' num2str(alpha(j)) ' degrees, tack 0 occurs @ \n']);

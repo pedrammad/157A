@@ -29,7 +29,7 @@ mMid = 2*mServo + mBatP + mBat + mFront;
 mEnd = m1D;
 
 % Dowel Densities [kg/m]
-rhoPlank = 0.2856;    % assuiming 2in(0.0508m) width and 0.01m height
+rhoPlank = 0.2856;    % assuiming 2in(0.0508m) width and 0.01m 
 rhoWH = 0.08934;
 rhoWS = 0.0772;
 rhoAl = 0.5563;
