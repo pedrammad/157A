@@ -56,7 +56,7 @@ cla = 0.2454*pi/180; cd0 = 0.057;   cl0 = 1.296;     %case1 ( 5.2697 sec)
 
 iWing = 0;
 AR = 1.5:0.1:6.5;             
-sweep = 0:32:32;
+sweep = 0:8:32;
 cRoot = .1:0.05:0.5;
 
 totalWings = length(AR)*length(sweep)*length(cRoot);
