@@ -1,4 +1,4 @@
-function [sailCart,fastestTime] = kinematics(sailCart)
+function [sailCart] = kinematics(sailCart)
 
 global trackWidth;
 global trackLength;
@@ -82,7 +82,7 @@ if vx(j) <0
     vx(j) = NaN;
 end
 
-sailCart.vFinal(j) = vx(j);     %Velocity at the turn (before the turn)
+%vFinal(j) = vx(j);     %Velocity at the turn (before the turn)
 
 
 end
@@ -95,12 +95,16 @@ end
 
 %xCart
 %t
-sailCart.xFinal = xCart;
-sailCart.timeFinal = t;
-sailCart.totalTime = (trackLength./sailCart.xFinal).*sailCart.timeFinal;
-[minValue,fastestIndex] = min(sailCart.totalTime);
-fastestTime = sailCart.totalTime(fastestIndex);
+xFinal = xCart;
+timeFinal = t;
+totalTime = (trackLength./xFinal).*timeFinal;
+[minValue,fastestIndex] = min(totalTime);
+sailCart.fastestTime = totalTime(fastestIndex);
 fastestAlpha= alpha(fastestIndex);
-display(['Fastest Trip of ' num2str(fastestTime)  ' seconds occurs @ Alpha =' num2str(fastestAlpha) ' degrees']);
+if isnan(sailCart.fastestTime)
+else
+display(['Fastest Trip of ' num2str(sailCart.fastestTime)  ' seconds occurs @ Alpha =' num2str(fastestAlpha) ' degrees']);
+end
 
+%New = sortrow(car,fastestTime);
 %sailCart

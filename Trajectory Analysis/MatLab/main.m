@@ -19,6 +19,7 @@ vWind = 6.03;
 global mFront;
 global mMid;
 global mEnd;
+global mPitch;
 m1D = 0.143;
 m2d = 0.1695;
 mServo = 0.04;
@@ -26,6 +27,7 @@ mBatP = 0.010;
 mBat = 0.060;
 mFront = m2d;
 mMid = 2*mServo + mBatP + mBat + mFront;
+mPitch = 2*mServo + mBatP + mBat;
 mEnd = m1D;
 
 % Dowel Densities [kg/m]
@@ -53,9 +55,9 @@ cla = 0.2454*pi/180; cd0 = 0.057;   cl0 = 1.296;     %case1 ( 5.2697 sec)
     rhoMast = rhoWH;
 
 iWing = 0;
-AR = 3.5:0.05:4.5;             
+AR = 1.5:0.1:6.5;             
 sweep = 0:32:32;
-cRoot = .1:0.1:0.5;
+cRoot = .1:0.05:0.5;
 
 totalWings = length(AR)*length(sweep)*length(cRoot);
 wing = zeros(totalWings,3);
@@ -81,25 +83,63 @@ for i = 1:iWing
     cRoot(i) = wing(i,3);
 
 car = buildCart(cRoot(i), AR(i), sweep(i), cla, cl0, cd0, aStall, rhoAxle, rhoBody, rhoMast);
+[car]  = kinematics(car);
+if isnan(car.fastestTime)
+else
 fprintf (['Case ' num2str(i) ': When AR =\t' num2str(AR(i)) ' & cRoot =\t' num2str(cRoot(i)) ' & sweep =\t' num2str(sweep(i)) '\n']);
-[car,tFastest]  = kinematics(car);
-tFastWing(i) = tFastest; 
-spanFastest(i) = car.span;
-carSpecs(i) = car;
 fprintf ('\n')
+end
+tFastWing(i) = car.fastestTime; 
+spanFastest(i) = car.span;
+lBodyFastest(i) = car.lBody;
+carSpecs(i) = car;
+
 
 
 end        
+figure
 plot (tFastWing, spanFastest,'.')
 xlabel ({'Fastest Time For Each Design', '[seconds]'});
 ylabel ({'Span' , '[meters]'})
-% hold on
+axis ([6 15 0.3 1.2])
+figure
+plot (tFastWing, lBodyFastest,'.')
+xlabel ({'Fastest Time For Each Design', '[seconds]'});
+ylabel ({'Body Length' , '[meters]'})
+axis ([6 15 0.1 0.8])
+
+figure
+plot (tFastWing, AR,'.')
+xlabel ({'Fastest Time For Each Design', '[seconds]'});
+ylabel ({'AR' })
+axis ([6 15 1.5 6.5])
+
 [minValue,fastestIndex] = min(tFastWing);
 tFastMax = tFastWing(fastestIndex)
 carOptimized = carSpecs(fastestIndex)
+
 fprintf (['FASTEST Travel Time @Case ' num2str(fastestIndex) ': When AR =\t' ...
                   num2str(AR(fastestIndex)) ' & cRoot =\t' ...
                   num2str(cRoot(fastestIndex)) ' & sweep =\t' ...
                   num2str(sweep(fastestIndex)) '\n']);
 
+Afields = fieldnames(carSpecs);
+Acell = struct2cell(carSpecs);
+sz = size(Acell);            % Notice that the this is a 3 dimensional array.
+                            % For MxN structure array with P fields, the size
+                            % of the converted cell array is PxMxN
+% Convert to a matrix
+Acell = reshape(Acell, sz(1), []);      % Px(MxN)
+
+% Make each field a column
+Acell = Acell';                         % (MxN)xP
+
+% Sort by first field "name"
+Acell = sortrows(Acell, 18);
+
+% Put back into original cell array format
+Acell = reshape(Acell', sz);
+
+% Convert to Struct
+Asorted = cell2struct(Acell, Afields, 1);
 
