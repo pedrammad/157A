@@ -1,6 +1,6 @@
-clc; 
 clear all; 
-
+close all;
+clc; 
 %% Course Constants 
 % Track Dimensions [m]
 global trackWidth;
